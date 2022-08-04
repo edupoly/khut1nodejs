@@ -1,6 +1,9 @@
 var http = require('http');
+var fs = require('fs');
 http.createServer(function(req,res){
     console.log('request recied')
-    res.write('hello.. how are you doing..this is icream server')
-    res.end();
+    fs.readFile('mypage.html',function(err,data){
+        res.write(data.toString())
+        res.end();
+    })
 }).listen(4500)
