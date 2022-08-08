@@ -8,28 +8,28 @@ var students = [
         lastname:'gubbala',
         age:40,
         place:'hyderabad',
-        gender:male
+        gender:'male'
     },
     {
         firstname:'srikanth',
         lastname:'gubbala',
         age:30,
         place:'bengaluru',
-        gender:male
+        gender:'male'
     },
     {
         firstname:'komal',
         lastname:'gupta',
         age:44,
         place:'indore',
-        gender:female
+        gender:'female'
     },
     {
         firstname:'himesh',
         lastname:'askdjhba',
         age:20,
         place:'gandhinagar',
-        gender:male
+        gender:'male'
     }
 ]
 http.createServer(function(req,res){
@@ -52,13 +52,22 @@ http.createServer(function(req,res){
     }
     if(x.pathname==='/searchStudent'){
         var sname = x.query.studentname;
-        if(students.includes(sname)){
-            res.write("student available")
+        var result = students.find(function(s){
+            if(s.firstname===sname){
+                return true
+            }
+            else{
+                return false
+            }
+        })
+        if(result===undefined){
+            res.write("no stundent available with that name");
+            res.end()
         }
         else{
-            res.write('no student with the given name')
+            res.write(JSON.stringify(result));
+            res.end();
         }
-        res.end();
     }
 
     if(req.url==="/"){
@@ -81,7 +90,4 @@ http.createServer(function(req,res){
             }
         })
     }
-        
-    
-    
 }).listen(4500)
